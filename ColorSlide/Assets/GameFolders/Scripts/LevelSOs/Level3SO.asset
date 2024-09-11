@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95cc96b4b17a9a34a8af071a46d90098, type: 3}
+  m_Name: Level3SO
+  m_EditorClassIdentifier: 
+  materials:
+  - {fileID: 2100000, guid: d4bdd49c774c96847bf2ef2c6b658ee0, type: 2}
+  - {fileID: 2100000, guid: 9b2c71e4baaad43409651eb7514f6cd9, type: 2}
+  - {fileID: 2100000, guid: b56833e18f927584ba32e835daf949fa, type: 2}
+  sliderParts: 3
