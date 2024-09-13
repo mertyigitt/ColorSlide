@@ -39,6 +39,8 @@ public class UIManager : MonoBehaviour
     [HideInInspector] public int extraCoinLevel;
     [HideInInspector] public int extraCoinLevelCoin;
     [HideInInspector] public int extraCoinBonus;
+
+    private Button[] _buttons;
     
     
 
@@ -50,15 +52,6 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         gameLevel = PlayerPrefs.GetInt("gameLevel");
-        
-        if (SceneManager.GetActiveScene().buildIndex == PlayerPrefs.GetInt("gameLevel"))
-        {
-        
-        }
-        else
-        {
-            SceneManager.LoadScene(PlayerPrefs.GetInt("gameLevel"));
-        }
         
         vibrateOn = true;
         soundOn = true;
@@ -133,10 +126,26 @@ public class UIManager : MonoBehaviour
         extraCoinLevelText.text = "LEVEL\n" + PlayerPrefs.GetInt("coinLevel");
         extraCoinLevelCoinText.text = PlayerPrefs.GetInt("extraCoin").ToString();
         
+        _buttons = FindObjectsOfType<Button>();
+
+        foreach (Button btn in _buttons)
+        {
+            btn.onClick.AddListener(UISoundandVibration);
+        }
+        
         OnSound?.Invoke();
     }
 
-    
+    private void UISoundandVibration()
+    {
+        if(vibrateOn)
+        {
+            Vibration.Vibrate(150);
+        }
+        clickAudio.Play();
+    }
+
+
     public void StartGame()
     {
         OnPlay?.Invoke();
@@ -146,7 +155,6 @@ public class UIManager : MonoBehaviour
     {
         if(gameCoin >= startStickManCoin)
         {
-            clickAudio.Play();
             gameCoin -= startStickManCoin;
             PlayerPrefs.SetInt("gameCoin", gameCoin);
             gameCoinText.text = PlayerPrefs.GetInt("gameCoin").ToString();
@@ -170,11 +178,6 @@ public class UIManager : MonoBehaviour
     {
         if(gameCoin >= extraCoinLevelCoin)
         {
-            if(vibrateOn)
-            {
-                Vibration.Vibrate(150);
-            }
-            clickAudio.Play();
             gameCoin -= extraCoinLevelCoin;
             PlayerPrefs.SetInt("gameCoin", gameCoin);
             gameCoinText.text = PlayerPrefs.GetInt("gameCoin").ToString();
@@ -194,34 +197,16 @@ public class UIManager : MonoBehaviour
             gameCoinTextSuccess.text = gameCoin.ToString();
         }
     }
-
-    public void Settings()
-    {
-        if (vibrateOn)
-        {
-            Vibration.Vibrate(150);
-        }
-        clickAudio.Play();
-    }
+    
 
     public void SoundOff()
     {
-        if (vibrateOn)
-        {
-            Vibration.Vibrate(150);
-        }
-        clickAudio.Play();
         soundOn = true;
         PlayerPrefsSetBool("sound", soundOn);
         OnSound?.Invoke();
     }
     public void SoundOn()
     {
-        if (vibrateOn)
-        {
-            Vibration.Vibrate(150);
-        }
-        clickAudio.Play();
         soundOn = false;
         PlayerPrefsSetBool("sound", soundOn);
         OnSound?.Invoke();
@@ -229,52 +214,24 @@ public class UIManager : MonoBehaviour
 
     public void VibrateOff()
     {
-        if (vibrateOn)
-        {
-            Vibration.Vibrate(150);
-        }
-        clickAudio.Play();
         vibrateOn = true;
         PlayerPrefsSetBool("vibrate", vibrateOn);
     }
 
     public void VibrateOn()
     {
-        if (vibrateOn)
-        {
-            Vibration.Vibrate(150);
-        }
-        clickAudio.Play();
         vibrateOn = false;
         PlayerPrefsSetBool("vibrate", vibrateOn);
     }
     
-    public void ExitSettings()
-    {
-        if (vibrateOn)
-        {
-            Vibration.Vibrate(150);
-        }
-        clickAudio.Play();
-    }
     
     public void ButtonNo()
     {
-        if (vibrateOn)
-        {
-            Vibration.Vibrate(150);
-        }
-        clickAudio.Play();
         LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void ButtonNoFail()
     {
-        if (vibrateOn)
-        {
-            Vibration.Vibrate(150);
-        }
-        clickAudio.Play();
         gameLevel++;
         PlayerPrefs.SetInt("gameLevel", gameLevel);
         LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -282,11 +239,6 @@ public class UIManager : MonoBehaviour
     
     public void TryAgain()
     {
-        if (vibrateOn)
-        {
-            Vibration.Vibrate(150);
-        }
-        clickAudio.Play();
         LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
